@@ -17,7 +17,8 @@ public class Sorting {
     static Pattern stringRegex = Pattern.compile("^[a-zA-Z]+$");
     
     public static void main(String[] args) {
-        // the sameness checker isn't working
+        String[] inputArray = {"asdf", "1.asdf"};
+        System.out.println(samenessChecker(inputArray, "string"));
     }
     
     // go through each array and check items individually
@@ -38,16 +39,21 @@ public class Sorting {
         return type;
     }
     
-    public static void samenessChecker(String[] inputArray, String type) {
+    public static int samenessChecker(String[] inputArray, String type) {
         // throw an exception if inconsistent input
         for(int i = 0; i < inputArray.length; i++) {
-            if (type.equals("float")) 
-                if(!floatingRegex.matcher(inputArray[i]).matches()) 
+            if (type.equals("float")) { 
+                if(!floatingRegex.matcher(inputArray[i]).matches()) {
                     throw new IllegalArgumentException();
-            else 
-                if(!stringRegex.matcher(inputArray[i]).matches()) 
+                } 
+            }
+            else {
+                if(!stringRegex.matcher(inputArray[i]).matches()) {
                     throw new IllegalArgumentException();
+                }
+            }
         }
+        return 1;
     }
     
 }
