@@ -13,22 +13,19 @@ import java.util.regex.*;
  */
 public class Sorting {
     
-    static Pattern floatingRegex = Pattern.compile("[-+]?[0-9]*\\.?[0-9]+");
-    static Pattern stringRegex = Pattern.compile("^[a-zA-Z]+$");
+    static Pattern floatingRegex = Pattern.compile("[-+]?[0-9 ]*\\.?[0-9 ]+");
+    static Pattern stringRegex = Pattern.compile("^[a-zA-Z ]+$");
     
     public static void main(String[] args) {
-        String[] inputArray = {"asdf", "1.asdf"};
-        System.out.println(samenessChecker(inputArray, "string"));
+        String[] inputArray = {"141.24", "12"};
+        System.out.println(detectType(inputArray));
     }
     
+    // need to make a function that processes raw into String[]
+    
     // go through each array and check items individually
-    public static String detectType(String input) {
-        // split input into an array to individually check
-        String[] inputArray = input.split(",");
-        
-        // outputs whether something matches regex p
-        // boolean matches = floatingRegex.matcher("12").matches();
-        
+    public static String detectType(String[] inputArray) {
+        // verify type based on first thing in array
         String type;
         if(floatingRegex.matcher(inputArray[0]).matches()) {
             type = "float";
@@ -36,7 +33,12 @@ public class Sorting {
             type = "string";
         }
         
-        return type;
+        // guarantee samenessChecker is run
+        if(samenessChecker(inputArray, type) == 1) {
+            return type;
+        } else {
+            return "ERROR";
+        }
     }
     
     public static int samenessChecker(String[] inputArray, String type) {
@@ -54,6 +56,12 @@ public class Sorting {
             }
         }
         return 1;
+    }
+    
+    public static void stringSorter() {
+    }
+    
+    public static void floatSorter() {
     }
     
 }
