@@ -17,11 +17,14 @@ public class Sorting {
     static Pattern stringRegex = Pattern.compile("^[a-zA-Z ]+$");
     
     public static void main(String[] args) {
-        String[] inputArray = {"141.24", "12"};
-        System.out.println(detectType(inputArray));
+        String[] inputArray = {"z", "b", "asdf", "c"};
+        // stringSorter isn't returning a sorted array
+        System.out.println(Arrays.toString(stringSorter(inputArray)));
+        // System.out.println(detectType(inputArray));
+        // need to make a function that processes raw into String[]
     }
     
-    // need to make a function that processes raw into String[]
+    
     
     // go through each array and check items individually
     public static String detectType(String[] inputArray) {
@@ -58,10 +61,31 @@ public class Sorting {
         return 1;
     }
     
-    public static void stringSorter() {
+    // use selection sort
+    public static String[] stringSorter(String[] inputArray) {
+        String[] returnArray = inputArray;
+        int smallestIndex = 0;
+        int fillIndex = 0;
+        // find smallest for each item in array
+        for(int j = 0; j < returnArray.length; j++) {
+            for(int i = fillIndex; i < returnArray.length; i++) {
+                if(returnArray[i].compareTo(returnArray[smallestIndex]) < 0) {
+                    smallestIndex = fillIndex;
+                }
+                // swap 
+                String temp = returnArray[fillIndex];
+                returnArray[fillIndex] = returnArray[smallestIndex];
+                returnArray[smallestIndex] = temp;
+            }
+            // setup for next run-through
+            fillIndex++;
+            smallestIndex = fillIndex;
+        }
+        return returnArray;
     }
     
-    public static void floatSorter() {
+    public static void floatSorter(double[] inputArrray) {
+        
     }
     
 }
