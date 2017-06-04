@@ -17,14 +17,25 @@ public class Sorting {
     static Pattern stringRegex = Pattern.compile("^[a-zA-Z ]+$");
     
     public static void main(String[] args) {
-        String[] inputArray = {"z", "b", "asdf", "c", "d", "agj"};
-       
-        System.out.println(Arrays.toString(stringSorter(inputArray)));
-        // System.out.println(detectType(inputArray));
-        // need to make a function that processes raw into String[]
+        String raw = "final static String[] ANIMALS = new String[] /* sort */ { \"eland\", \"antelope\", \"hippopotamus”};\n";
+        System.out.println(Arrays.toString(processRaw(raw)));
+        String[] stringArray = {"z", "1", "b", "asdf", "c", "d", "agj", "yali", "raymond", "azzdks"};
+        // System.out.println(Arrays.toString(stringSorter(stringArray)));
+        double[] floatArray = {1, 2, 5, 1908, 0.4};
+        // System.out.println(Arrays.toString(floatSorter(floatArray)));
     }
     
-    
+    public static String[] processRaw(String input) {
+        int startingIndex;
+        if(input.contains("/* sort */")) { 
+            // add 13 to bypass the first bracket {
+            startingIndex = input.indexOf("/* sort */") + 13;
+            // find when the array ends then grab the substring
+            int endingIndex = input.indexOf("}");
+            return input.substring(startingIndex, endingIndex).split(",");
+        }
+        return input.split("");
+    }
     
     // go through each array and check items individually
     public static String detectType(String[] inputArray) {
@@ -85,8 +96,29 @@ public class Sorting {
         return returnArray;
     }
     
-    public static void floatSorter(double[] inputArrray) {
-        
+    public static double[] floatSorter(double[] inputArray) {
+        double[] returnArray = inputArray;
+        int smallestIndex = 0;
+        int fillIndex = 0;
+        // find smallest from unsorted portion for each item in array
+        for(int j = 0; j < returnArray.length; j++) {
+            for(int i = fillIndex; i < returnArray.length; i++) {
+                if(returnArray[i] < returnArray[smallestIndex]) {
+                    smallestIndex = i;
+                }
+            }
+            // swap 
+            double temp = returnArray[fillIndex];
+            returnArray[fillIndex] = returnArray[smallestIndex];
+            returnArray[smallestIndex] = temp;
+                
+            // setup for next run-through
+            fillIndex++;
+            smallestIndex = fillIndex;
+        }
+        return returnArray;
     }
+    
+    
     
 }
