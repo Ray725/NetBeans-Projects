@@ -9,7 +9,6 @@ This project is for tidying Java source code by alphabetizing the array initiali
 What you sort looks like this:
 ```java
 final static String[] ANIMALS = new String[] /* sort */ { "eland", "antelope", "hippopotamus”};
-Complications
 ```
 
 * The user may have a horizontal or vertical list. You should preserve that.
