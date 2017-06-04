@@ -21,8 +21,8 @@ public class Sorting {
         System.out.println(Arrays.toString(processRaw(raw)));
         String[] stringArray = {"z", "1", "b", "asdf", "c", "d", "agj", "yali", "raymond", "azzdks"};
         // System.out.println(Arrays.toString(stringSorter(stringArray)));
-        double[] floatArray = {1, 2, 5, 1908, 0.4};
-        // System.out.println(Arrays.toString(floatSorter(floatArray)));
+        String[] floatArray = {"1", "1.2", "0.4"};
+        System.out.println(Arrays.toString(floatSorter(floatArray)));
     }
     
     public static String[] processRaw(String input) {
@@ -96,19 +96,19 @@ public class Sorting {
         return returnArray;
     }
     
-    public static double[] floatSorter(double[] inputArray) {
-        double[] returnArray = inputArray;
+    public static String[] floatSorter(String[] inputArray) {
+        String[] returnArray = inputArray;
         int smallestIndex = 0;
         int fillIndex = 0;
         // find smallest from unsorted portion for each item in array
         for(int j = 0; j < returnArray.length; j++) {
             for(int i = fillIndex; i < returnArray.length; i++) {
-                if(returnArray[i] < returnArray[smallestIndex]) {
+                if(Double.parseDouble(returnArray[i]) < Double.parseDouble(returnArray[smallestIndex])) {
                     smallestIndex = i;
                 }
             }
             // swap 
-            double temp = returnArray[fillIndex];
+            String temp = returnArray[fillIndex];
             returnArray[fillIndex] = returnArray[smallestIndex];
             returnArray[smallestIndex] = temp;
                 
