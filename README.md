@@ -3,7 +3,9 @@ Repository for Java projects.
 
 This is a collection of small algorithmic projects and (eventually) some machine-learning based code.
 
-## Sorting Project (specification from http://mindprod.com/project/projects.html):
+## Summer 2017 Projects
+
+### Sorting Project (specification from http://mindprod.com/project/projects.html):
 This project is for tidying Java source code by alphabetizing the array initialisation statements. The user would mark array initialization statements he/she wanted sorted with a comment `/* sort */`. You would sort them all then write results back over the original.
 
 What you sort looks like this:
