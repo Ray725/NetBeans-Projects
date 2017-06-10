@@ -13,18 +13,18 @@ import java.util.regex.*;
  */
 public class Sorting {
     
-    static Pattern floatingRegex = Pattern.compile("[-+]?[0-9 ]*\\.?[0-9 ]+");
+    static Pattern floatingRegex = Pattern.compile("^[-+]?[0-9]*\\.?[0-9]+$");
     static Pattern stringRegex = Pattern.compile("^[a-zA-Z \"]+$");
     
     public static void main(String[] args) {
-        String raw = "final static String[] ANIMALS = new String[] /* sort */ {\"eland\", \"raymond\", \"antelope\", \"hippopotamus\"};\n";
-        String rawTwo = "final static String[] ANIMALS = new String[] /* sort */ {8, 1.2, 1.4, 5, 7, 394};\n";
-        // System.out.println(Arrays.toString(processRaw(raw)));
+        String raw = "final static String[] ANIMALS = new String[] /* sort */ {\"aland\", \"raymond\", \"antelope\", \"hippopotamus\"};\n";
+        String rawTwo = "final static String[] NUMBER = new String[] /* sort */ {8, 1.2, -1.4, 5, 7, 32, 394, 24098, 0};\n";
+        // System.out.println(Arrays.toString(processRaw(rawTwo)));
         // System.out.println(samenessChecker(processRaw(raw), "string"));
-        String[] stringArray = {"eland", "watermelon"};
+        String[] stringArray = {"aland", "raymond", "antelope", "hippopotamus"};
         // System.out.println(Arrays.toString(stringArray));
         // System.out.println(Arrays.toString(stringSorter(stringArray)));
-        String[] floatArray = {"1", "1.2", "0.4"};
+        String[] floatArray = {"8", "1.2", "-1.4", "5", "7", "32", "394", "24098", "0"};
         // System.out.println(Arrays.toString(floatSorter(floatArray)));
         System.out.println(writeOver(raw));
         // System.out.println(raw.substring(0, raw.indexOf("/* sort */") + 13));
@@ -41,8 +41,11 @@ public class Sorting {
         }
         
         String[] processedArray = processRaw(raw);
+        // trim whitespace that'll throw off floatSorter otherwise
+        for(int i = 0; i < processedArray.length; i++) { 
+            processedArray[i] = processedArray[i].trim();
+        }
         String type = detectType(processedArray);
-        
         if(type.equals("float")) { 
             processedArray = floatSorter(processedArray);
         } else { 
@@ -61,7 +64,7 @@ public class Sorting {
     
     public static String[] processRaw(String input) {
         int startingIndex;
-        // add 13 to bypass the first bracket {
+        // add 12 to bypass the first bracket {
         startingIndex = input.indexOf("/* sort */") + 12;
         // find when the array ends then grab the substring
         int endingIndex = input.indexOf("}");
@@ -91,12 +94,12 @@ public class Sorting {
         for(int i = 0; i < inputArray.length; i++) {
             if (type.equals("float")) { 
                 if(!floatingRegex.matcher(inputArray[i]).matches()) {
-                    return 0;
+                    throw new IllegalArgumentException("Not homogenous input");
                 } 
             }
             else {
                 if(!stringRegex.matcher(inputArray[i]).matches()) {
-                    return 0;
+                    throw new IllegalArgumentException("Not homogenous input");
                 }
             }
         }
