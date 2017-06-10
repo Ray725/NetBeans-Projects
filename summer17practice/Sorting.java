@@ -17,8 +17,9 @@ public class Sorting {
     static Pattern stringRegex = Pattern.compile("^[a-zA-Z \"]+$");
     
     public static void main(String[] args) {
-        String raw = "final static String[] ANIMALS = new String[] /* sort */ {\"aland\", \"raymond\", \"antelope\", \"hippopotamus\"};\n";
-        String rawTwo = "final static String[] NUMBER = new String[] /* sort */ {8, 1.2, -1.4, 5, 7, 32, 394, 24098, 0};\n";
+        String raw = "final static String[] ANIMALS = new String[] /* sort */ {\"aland\", \"raymond\", \"antelope\", \"hippopotamus\"};";
+        String rawTwo = "final static String[] NUMBER = new String[] /* sort */ {8, 1.2, -1.4, 5, 7, 32, 394, 24098, 0};";
+        String rawVertical = "final static String[] ANIMALS = new String[] /* sort */ {\"aland\",\n \"raymond\",\n \"antelope\",\n \"hippopotamus\"};";
         // System.out.println(Arrays.toString(processRaw(rawTwo)));
         // System.out.println(samenessChecker(processRaw(raw), "string"));
         String[] stringArray = {"aland", "raymond", "antelope", "hippopotamus"};
@@ -26,16 +27,17 @@ public class Sorting {
         // System.out.println(Arrays.toString(stringSorter(stringArray)));
         String[] floatArray = {"8", "1.2", "-1.4", "5", "7", "32", "394", "24098", "0"};
         // System.out.println(Arrays.toString(floatSorter(floatArray)));
-        System.out.println(writeOver(raw));
+        System.out.println(writeOver(rawVertical));
         // System.out.println(raw.substring(0, raw.indexOf("/* sort */") + 13));
         //System.out.println(stringRegex.matcher("eland").matches());
         // System.out.println(detectType(stringArray));
+        // System.out.println(rawVertical);
     }
     
     public static String writeOver(String raw) { 
         // get beginning, process array in middle, glue them and output
         String beginning = "";
-        
+        boolean vertical = raw.contains("\n");
         if(raw.contains("/* sort */")) { 
             beginning = raw.substring(0, raw.indexOf("/* sort */") + 12);
         }
@@ -59,7 +61,11 @@ public class Sorting {
         String finalProcess = Arrays.toString(processedArray);
         // get rid of []
         finalProcess = finalProcess.substring(1, finalProcess.length() - 1);
-        return beginning + finalProcess + "};";
+        if(vertical) { 
+            return beginning + finalProcess.replace(",", ",\n") + "};";
+        } else {
+            return beginning + finalProcess + "};";
+        }
     }
     
     public static String[] processRaw(String input) {
